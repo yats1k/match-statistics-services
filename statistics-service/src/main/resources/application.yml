@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: statistics-service
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+  cloud:
+    discovery:
+      client:
+        service-url:
+          defaultZone: http://eureka-app:8761/eureka/
+        health-indicator:
+          enabled: true
+  kafka:
+    bootstrap-servers: kafka:9092
+    consumer:
+      group-id: stats-service
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: com.microservice.statistics.mapper.MatchDataDeserializer
+      auto-offset-reset: earliest
+      enable-auto-commit: true
+      max-poll-records: 100
+  profiles:
+    active: test
+server:
+  port: 8088
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-app:8761/eureka/
+logging:
+  level:
+    org:
+      springframework:
+        kafka: DEBUG

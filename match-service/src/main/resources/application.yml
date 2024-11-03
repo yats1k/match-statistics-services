@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: match-service
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+  cloud:
+    discovery:
+      client:
+        service-url:
+          defaultZone: http://eureka-app:8761/eureka/
+        health-indicator:
+          enabled: true
+  kafka:
+    bootstrap-servers: kafka:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: com.microservice.match.mapper.MatchDataSerializer
+  profiles:
+    active: test
+server:
+  port: 8089
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+match:
+  kills-amount-max: 20
+  death-amount-max: 20
+  assists-amount-max: 10
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-app:8761/eureka/

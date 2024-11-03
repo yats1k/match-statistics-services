@@ -1,0 +1,9 @@
+logging:
+  level:
+    org.springframework: DEBUG
+match:
+  players-amount: 20
+  kills-amount-max: 20
+  death-amount-max: 20
+  assists-amount-max: 10
+
